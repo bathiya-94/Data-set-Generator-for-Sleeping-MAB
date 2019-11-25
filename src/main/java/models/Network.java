@@ -7,12 +7,14 @@ public class Network {
     private List<MTD> mtdList;
     private  List<MTD> activeMTDsList;
 
-    public Network(int[] activeMTDs) {
+    public Network(List<Integer> maxTolerableDelays , List<Integer> activeMTDs) {
 
-        int[] maxTolerableDelays = new int[]{11, 7, 12, 7, 4, 9, 11, 4, 11, 7,
-                5, 6, 7, 6, 12, 8, 7, 5, 9, 11,
-                8, 4, 12, 6, 13, 9, 4, 5, 6, 13,
-                7, 10, 13, 9, 11, 12, 7, 8, 13, 10};
+//        int[] maxTolerableDelays = new int[]{11, 7, 12, 7, 4, 9, 11, 4, 11, 7,
+//                5, 6, 7, 6, 12, 8, 7, 5, 9, 11,
+//                8, 4, 12, 6, 13, 9, 4, 5, 6, 13,
+//                7, 10, 13, 9, 11, 12, 7, 8, 13, 10};
+
+
 
         this.mtdList = new ArrayList<>();
 
@@ -39,3 +41,4 @@ public class Network {
         return activeMTDsList;
     }
 }
+

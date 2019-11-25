@@ -1,3 +1,4 @@
+import models.FileReader;
 import models.MTD;
 import models.Network;
 
@@ -10,11 +11,16 @@ import java.util.Random;
 public class Main {
     public static  void main(String[] args) throws IOException {
 
-        final int NO_OF_ACTIVE_DEVICES_PER_TIME_STEP =10;
+        final int NO_OF_ACTIVE_DEVICES_PER_TIME_STEP =50;
         final  int  NO_OF_TIME_STEPS = 100000;
 
+        // Getting delays and active MTDs from text files
+        FileReader fileReader = new FileReader();
+        List<Integer> maxTolerableDelays = fileReader.getDelaysArray();
+        List<Integer> activeMTDs  = fileReader.getActiveMTDs();
+
         // Creating the network with active mtds at first time step
-        Network network = new Network(new int[]{1, 2, 3, 4 , 5,6,7,8,9,10});
+        Network network = new Network(maxTolerableDelays, activeMTDs);
 
         // Getting active and total mtd list
         List<MTD> mtdList = network.getMtdList();
@@ -32,6 +38,14 @@ public class Main {
         // Main Time Step loop
         for (int time = 0 ; time <NO_OF_TIME_STEPS ; time ++) {
 
+            if (time ==0){
+                System.out.println("WSN Simulator Starting....!");
+                System.out.println("Simulating Network......Please Wait !");
+            }
+
+            int timeStep = time+1;
+
+            System.out.println("Time Step: " +timeStep+" out of "+NO_OF_TIME_STEPS);
             //Create variable list
             List<String> delaysList = new ArrayList<>();
             List<String> activeProbabilityList = new ArrayList<>();
@@ -43,7 +57,7 @@ public class Main {
             // Changing the active MTDs
             while (noOfMTDsNeeded !=0){
                 Random index = new Random();
-                int n =  index.nextInt(39);
+                int n =  index.nextInt(499);
 
                 MTD selectedMTD = mtdList.get(n);
 
@@ -77,10 +91,7 @@ public class Main {
             delayCSVWriter.append(String.join(",", delaysList));
             delayCSVWriter.append("\n");
 
-            if (time ==0){
-                System.out.println("WSN Simulator Starting....!");
-                System.out.println("Simulating Network......Please Wait !");
-            }
+
         }
 
         delayCSVWriter.flush();
